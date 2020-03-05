@@ -34,6 +34,11 @@ import {
   DEFAULT_CONTENT_WIDTH_TYPE,
   DEFAULT_MULTI_PAGE
 } from "@/store/mutation-types"
+/*引入bootstrap 及jquery
+import 'jquery/dist/jquery.min'
+import 'bootstrap/dist/js/bootstrap.min'
+import 'bootstrap/dist/css/bootstrap.min.css'
+*/
 import config from '@/defaultSettings'
 
 import JDictSelectTag from './components/dict/index.js'

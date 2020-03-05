@@ -76,14 +76,14 @@
   }
 </style>-->
 <template>
-  <div id="div-etc1"  :style="{backgroundImage:`url(${img})`}" >
+  <div id="div-etc1">
     <a-row >
-     <a-col    :span="12">
-        <!--<div id="div-col-etc1" >
+     <!-- <a-col  class="height-100" :span="12">
+        <div id="div-etc1">
           <p> 说明</p>
-        </div>-->
-      </a-col>
-      <a-col  class="height-100" :span="12">
+        </div>
+      </a-col>-->
+      <a-col  class="height-100" :span="24">
         <div id="div-etc2">
           <!--     slider     -->
           <div id="slider">
@@ -127,11 +127,6 @@
 
 </template>
 <style>
-
-  #div-etc1{
-    height: 520px;
-  }
-  /*---------------*/
   *{
     box-sizing: border-box;
     margin:0;
@@ -211,31 +206,31 @@
   }
   },
   data () {
-    return {
-      img: require('@/assets/etcbg-2.svg'),
-      sliders:[
-      {img: require("@/assets/lb-1.svg")
-     // img:'http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658'
-      },
-      {
-      img:require("@/assets/lb-2.svg")
-      },
-      {
-      img:require("@/assets/lb-3.svg")
-      },
-      {
-      img:require("@/assets/lb-4.svg")
-      },
-      {
-      img:require("@/assets/lb-5.svg")
-      },
-      ],
-    imgWidth:600,
-    currentIndex:1,
-    distance:-600,
-    transitionEnd: true,
-    speed: this.initialSpeed
-    }
+  return {
+  sliders:[
+
+  {
+  img:'http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658'
+  },
+  {
+  img:'http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658'
+  },
+  {
+  img:'http://img.hb.aicdn.com/ab7f48509b3c0353017d9a85ef1d12400c9b2724540d4-p3zouo_fw658'
+  },
+  {
+  img:'http://img.hb.aicdn.com/60f788fc2a846192f224b9e6d4904b30e54926211d3d67-ACFJ9G_fw658'
+  },
+  {
+  img:'http://img.hb.aicdn.com/22ded455284aab361b8d2056e82f74a891a019704296a-PSraEB_fw658'
+  },
+  ],
+  imgWidth:600,
+  currentIndex:1,
+  distance:-600,
+  transitionEnd: true,
+  speed: this.initialSpeed
+  }
   },
   computed:{
   containerStyle() {
