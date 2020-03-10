@@ -1,6 +1,6 @@
 <template>
   <div class="main user-layout-register">
-    <h3><span>注册</span></h3>
+    <!--<h3><span>注册</span></h3>-->
     <a-form ref="formRegister" :autoFormCreate="(form)=>{this.form = form}" id="formRegister">
       <a-form-item
         fieldDecoratorId="username"
@@ -36,6 +36,18 @@
         :fieldDecoratorOptions="{rules: [{ required: true, type: 'email', message: '请输入正确的邮箱地址' }, { validator: this.handleEmailCheck }], validateTrigger: ['change', 'blur']}">
         <a-input size="large" type="text" placeholder="邮箱"></a-input>
       </a-form-item>
+      <a-radio-group
+        v-model="userstatus"
+        @change="userstatiusChange">
+        <a-radio value="0">个人用户</a-radio>
+        <a-radio value="1">企业用户</a-radio>
+      </a-radio-group>
+     <!-- <a-radio-group buttonStyle="solid" v-decorator="[ 'status', {'initialValue':0}]">
+        <a-radio-button :value="0">个人用户</a-radio-button>
+        <a-radio-button :value="-1">企业用户</a-radio-button>
+      </a-radio-group>-->
+
+
      <!-- <a-form-item
         fieldDecoratorId="mobile"
         :fieldDecoratorOptions="{rules: [{ required: true, pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号' }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }">
@@ -96,6 +108,7 @@
   import {getSmsCaptcha} from '@/api/login'
   import {getAction, postAction} from '@/api/manage'
   import {checkOnlyUser} from '@/api/api'
+  import ARadioButton from 'ant-design-vue/es/radio/RadioButton'
 
   const levelNames = {
     0: '低',
@@ -117,12 +130,14 @@
   }
   export default {
     name: "Register",
-    components: {},
+    components: { ARadioButton },
     mixins: [mixinDevice],
     data() {
-      return {
-        form: null,
 
+      return {
+
+        form: null,
+        userstatus:0,
         state: {
           time: 60,
           smsSendBtn: false,
@@ -146,6 +161,17 @@
       }
     },
     methods: {
+      userstatiusChange(e){
+        if(e.target.value==="0"){
+         // alert("0000000000000000")
+          this.userstatus='0';
+         // alert(userstatus)
+        }else if(e.target.value==="1"){
+         // alert("111111111111111111")
+          this.userstatus='1';
+        //  alert(userstatus)
+        }
+      },
       checkUsername(rule, value, callback) {
         var params = {
           username: value,
@@ -238,15 +264,21 @@
       },
 
       handleSubmit() {
+       // console.log("66666666666666666666666666"+this.userstatus)
+       // console.log("66666666666666666666666666"+this.username)
         this.form.validateFields((err, values) => {
+
           if (!err) {
             var register = {
               username: values.username,
               password: values.password,
               email: values.email,
               phone: values.mobile,
-              smscode: values.captcha
+              smscode: values.captcha,
+              userstatus: this.userstatus
             };
+            //console.log("rrrrrrrrrrrrrrrrrrrrr"+register.userstatus);
+            //console.log("rrrrrrrrrrrrrrrrrrrrr"+register.email);
             postAction("/sys/user/register", register).then((res) => {
               if (!res.success) {
                 this.registerFailed(res.message)
