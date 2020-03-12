@@ -16,10 +16,10 @@
               <i class="title"></i>交互专家
             </p>
             <p>
-              <i class="group"></i>蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
+              <i class="group"></i>中软－etc事业群－技术部－UED
             </p>
             <p>
-              <i class="address"></i><span>浙江省</span><span>杭州市</span>
+              <i class="address"></i><span>北京市</span><span>东城区</span>
             </p>
           </div>
           <a-divider />
