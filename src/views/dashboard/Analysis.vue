@@ -211,6 +211,7 @@
   }
   },
   data () {
+
     return {
       img: require('@/assets/etcbg-2.svg'),
       sliders:[

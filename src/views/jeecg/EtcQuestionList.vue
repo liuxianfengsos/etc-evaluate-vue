@@ -222,6 +222,9 @@
     },
     methods: {
       initDictConfig(){
+      },
+      created(){
+        console.log("09090909090090909090909090");
       }
     }
   }
