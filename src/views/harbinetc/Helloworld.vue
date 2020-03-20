@@ -52,8 +52,8 @@
           </a-radio-group>
         <div><button @click="nextone">下一题</button></div>-->
         <!--{{reqmsg}}-->
-
-        <a-radio-group name="radioGroup" @change="onChange" :defaultValue="0"  v-bind:style="{'background-color': activeColor }">
+<!--<a-radio-group name="radioGroup" @change="onChange" :defaultValue="0"  v-bind:style="{'background-color': activeColor }">-->
+        <a-radio-group name="radioGroup" ref="myvalueset" @change="onChange" :defaultValue="0"  v-bind:style="{'background-color': activeColor }">
         <a-card :bordered="false"  v-bind:style="{'background-color': activeColor }">
 
           <a-form >
@@ -64,7 +64,7 @@
             </a-col>
             <a-col :md="24" :sm="24">
               <a-form-item label="A" :labelCol="{ span: 7 }" :wrapperCol="{ span: 15 }" >
-                <a-radio  :value="1">{{reqmsg1.opta}}</a-radio>
+                <a-radio   :value="1">{{reqmsg1.opta}}</a-radio>
               </a-form-item>
             </a-col>
             <a-col :md="24" :sm="24">
@@ -114,12 +114,14 @@
   import { validateDuplicateValue } from '@/utils/util'
   import JDate from '@/components/jeecg/JDate'
   import JDictSelectTag from "@/components/dict/JDictSelectTag"
+  import * as Radio from 'ant-design-vue'
 
   export default {
     name: 'helloworld',
     data(){
 
       return {
+        param:{'list':[]},
         i:1,
         index:0,
         exameno:1,
@@ -183,7 +185,8 @@
        url: {
          list: "/exam/etcQuestion/list",
           submit: "/exam/etcQuestion/add",
-          mylist: "/exam/etcQuestion/list4exam"
+          mylist: "/exam/etcQuestion/list4exam",
+         mysubmit: "exam/etcQuestion/mysubmit"
         }
       }
     },
@@ -217,23 +220,7 @@
             this.reqmsg1.mark = this.reqmsg[this.index].mark;
             this.reqmsg2.push(this.reqmsg1);
           }
-         /* for (var i=0;i<this.reqmsg.length;i++){
-            this.reqmsg1.id = this.reqmsg[i].id;
-            this.reqmsg1.qtName = this.reqmsg[i].qtName;
-            this.reqmsg1.opta = this.reqmsg[i].opta;
-            this.reqmsg1.optb = this.reqmsg[i].optb;
-            this.reqmsg1.optc = this.reqmsg[i].optc;
-            this.reqmsg1.optd = this.reqmsg[i].optd;
-            this.reqmsg1.mark = this.reqmsg[i].mark;
-            this.reqmsg2.push(this.reqmsg1);
-            //console.log("测试数组"+this.reqmsg2);
-           // console.log("测试数组"+this.reqmsg[0].id);
-          }*/
-/*          this.reqmsg2.forEach( (value,index)=>{
-            console.log(`value:${value.id}    index:${index}`)
-          })*/
         });
-        //console.log("mgs1"+this.reqmsg1.id+","+this.reqmsg1.opta);
 
       },
       onChange(e){
@@ -242,21 +229,27 @@
       },
 
       nextone(){
-        this.myanswer.push({'id':this.reqmsg1.id,'an':this.answer})
+
+        //console.log("333333333333333333"+this.$refs.myvalueset.value);
+        if(this.answer  == 0 || this.answer  == ''){
+          alert('答案不能为空');
+          return false
+        }
+
+        //this.myanswer.push({'id':this.reqmsg1.id,'an':this.answer})
+        this.myanswer.push(this.reqmsg1);
         this.i = this.exameno;
-        //console.log( "iiiiiiiiiiiiiiiiiiiii"+this.i);
         this.test1();
       },
       test1(){
-      //  console.log("test1test1test1test1test1test1test1")
         if(this.i>0){
           this.index = this.i;
         }
         if(this.exameno==9){
-         // console.log("------------------------111111111111试题提交11111111111111111111-------------");
           this.shownext = !this.shownext;
           this.showsubmit = !this.showsubmit;
         }
+        //this.$refs.myvalueset.value = 0;//有警告 忽略。
         getAction(this.url.mylist).then((res)=>{
           this.reqmsg=res.result;
           if(this.reqmsg.length>0){
@@ -267,18 +260,19 @@
             this.reqmsg1.optc = this.reqmsg[this.index].optc;
             this.reqmsg1.optd = this.reqmsg[this.index].optd;
             this.reqmsg1.mark = this.reqmsg[this.index].mark;
-
           }
           this.exameno = this.exameno+1;
         });
 
       },
       examesubmit(){
-
         this.showpart3 = !this.showpart3;
         this.showpart2 = !this.showpart2;
+        this.param = {"list":this.myanswer};
+        console.log(this.param);
+        postAction(this.url.mysubmit,this.param).then((res)=>{
 
-
+        });
       },
       myanswersubmit(){
         alert("系统维护中，请等待。");

@@ -53,7 +53,7 @@
         <div><button @click="nextone">下一题</button></div>-->
         <!--{{reqmsg}}-->
 
-        <a-radio-group name="radioGroup" @change="onChange" :defaultValue="0"  v-bind:style="{'background-color': activeColor }">
+        <a-radio-group name="radioGroup" ref="myvalueset" @change="onChange" :defaultValue="0"  v-bind:style="{'background-color': activeColor }">
         <a-card :bordered="false"  v-bind:style="{'background-color': activeColor }">
 
           <a-form >
@@ -183,7 +183,8 @@
        url: {
          list: "/exam/etcQuestion/list",
           submit: "/exam/etcQuestion/add",
-          mylist: "/exam/etcQuestion/list4exam"
+          mylist: "/exam/etcQuestion/list4exam",
+         mysubmit: "exam/etcQuestion/mysubmit"
         }
       }
     },
@@ -242,9 +243,14 @@
       },
 
       nextone(){
-        this.myanswer.push({'id':this.reqmsg1.id,'an':this.answer})
+
+        if(this.answer  == 0 || this.answer  == ''){
+          alert('答案不能为空');
+          return false
+        }
+        //this.myanswer.push({'id':this.reqmsg1.id,'an':this.answer})
+        this.myanswer.push(this.reqmsg1);
         this.i = this.exameno;
-        //console.log( "iiiiiiiiiiiiiiiiiiiii"+this.i);
         this.test1();
       },
       test1(){
@@ -257,6 +263,7 @@
           this.shownext = !this.shownext;
           this.showsubmit = !this.showsubmit;
         }
+        //this.$refs.myvalueset.value = 0;//有警告 忽略。
         getAction(this.url.mylist).then((res)=>{
           this.reqmsg=res.result;
           if(this.reqmsg.length>0){
@@ -277,7 +284,11 @@
 
         this.showpart3 = !this.showpart3;
         this.showpart2 = !this.showpart2;
+        this.param = {"list":this.myanswer};
+        console.log(this.param);
+        postAction(this.url.mysubmit,this.param).then((res)=>{
 
+        });
 
       },
       myanswersubmit(){
