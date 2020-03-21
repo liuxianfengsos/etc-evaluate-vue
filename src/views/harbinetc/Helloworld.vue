@@ -126,7 +126,8 @@
         index:0,
         exameno:1,
         myanswer:[],
-        answer:'',
+        //answer:'',
+
         listlength:0,
         activeColor:'skyblue',
         showpart1: true,
@@ -143,7 +144,8 @@
           "optb": "optb2002",
           "optc": "optc2002",
           "optd": "optd2002",
-          "mark": "mark2002"
+          "mark": "mark2002",
+          "answer":"1"
         },
         reqmsg2:[],
         validatorRules: {
@@ -224,14 +226,23 @@
 
       },
       onChange(e){
-        this.answer = e.target.value;
+        if(e.target.value=='1'){
+          this.reqmsg1.answer = 'A';
+        }else if(e.target.value=='2'){
+          this.reqmsg1.answer = 'B';
+        }else if(e.target.value=='3'){
+          this.reqmsg1.answer = 'C';
+        }else if(e.target.value=='4'){
+          this.reqmsg1.answer = 'D';
+        }else {
+          this.reqmsg1.answer = 'E';
+        }
        // console.log(`answer = ${e.target.value}`);
       },
 
       nextone(){
-
         //console.log("333333333333333333"+this.$refs.myvalueset.value);
-        if(this.answer  == 0 || this.answer  == ''){
+        if(this.reqmsg1.answer  == 0 || this.reqmsg1.answer  == ''){
           alert('答案不能为空');
           return false
         }
